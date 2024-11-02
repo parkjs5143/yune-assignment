@@ -1,18 +1,35 @@
-import LayerPanel from "./components/LayerPanel/LayerPanel";
-import Viewport from "./components/Viewport/Viewport";
-import useElements from "./hooks/useElements";
+import LayerPanel from "@/components/LayerPanel/LayerPanel";
+import Viewport from "@/components/Viewport/Viewport";
+import useElements from "@/hooks/useElements";
 
 function App() {
-  const { elements, addElement, selectElement } = useElements();
+  const {
+    elements,
+    selectedIds,
+    addElement,
+    selectElement,
+    handleGrouping,
+    handleAlignment,
+    moveElement,
+  } = useElements();
 
   return (
     <div className="min-w-full flex flex-row">
       <LayerPanel
         elements={elements}
+        selectedIds={selectedIds}
         addElement={addElement}
         selectElement={selectElement}
+        handleGrouping={handleGrouping}
+        handleAlignment={handleAlignment}
+        moveElement={moveElement}
       />
-      <Viewport elements={elements} selectElement={selectElement} />
+      <Viewport
+        elements={elements}
+        selectedIds={selectedIds}
+        selectElement={selectElement}
+        moveElement={moveElement}
+      />
     </div>
   );
 }

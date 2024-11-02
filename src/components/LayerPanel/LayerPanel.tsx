@@ -1,16 +1,28 @@
-import { ElementParams, ElementType } from "../../types/types";
+import { ElementParams, ElementType, AlignDirectionType } from "@/types/types";
 import AddElementButton from "./Button/AddElementButton";
+import AlignElementButton from "./Button/AlignElementButton";
+import LayerItem from "./LayerItem/LayerItem";
 
 type LayerPanelProps = {
   elements: ElementParams[];
+  selectedIds: number[];
   addElement: (type: ElementType) => void;
-  selectElement: (id: string, isSelected: boolean) => void;
+  selectElement: (id: number, isSelected: boolean) => void;
+  handleGrouping: (group: boolean) => void;
+  handleAlignmentAll: (type: AlignDirectionType) => void;
+  handleAlignmentGroup: (type: AlignDirectionType) => void;
+  moveElement: (fromIndex: number, toIndex: number) => void;
 };
 
 const LayerPanel = ({
   elements,
+  selectedIds,
   addElement,
   selectElement,
+  handleGrouping,
+  handleAlignmentAll,
+  handleAlignmentGroup,
+  moveElement,
 }: LayerPanelProps) => {
   return (
     <section className="bg-gray-800">
@@ -18,9 +30,9 @@ const LayerPanel = ({
       <div className="px-2 py-5 border-b-[1px] border-white">
         <p className="text-white font-bold text-center mb-3">Add</p>
         <div className="w-fit flex gap-3">
-          <AddElementButton type="div" addElement={addElement} />
-          <AddElementButton type="span" addElement={addElement} />
-          <AddElementButton type="p" addElement={addElement} />
+          <AddElementButton type="div" onClick={() => addElement("div")} />
+          <AddElementButton type="span" onClick={() => addElement("span")} />
+          <AddElementButton type="p" onClick={() => addElement("p")} />
         </div>
       </div>
 
@@ -28,18 +40,22 @@ const LayerPanel = ({
       <div className="px-2 py-5 border-b-[1px] border-white">
         <p className="text-white font-bold text-center mb-3">Align</p>
         <div className="flex flex-col items-center">
-          <button className="text-white py-2 w-full rounded-full transition duration-200 ease-in-out hover:bg-slate-700 active:bg-slate-900 focus:outline-none">
-            All Vertically
-          </button>
-          <button className="text-white py-2 w-full rounded-full transition duration-200 ease-in-out hover:bg-slate-700 active:bg-slate-900 focus:outline-none">
-            All Horizontally
-          </button>
-          <button className="text-white py-2 w-full rounded-full transition duration-200 ease-in-out hover:bg-slate-700 active:bg-slate-900 focus:outline-none">
-            Group Vertically
-          </button>
-          <button className="text-white py-2 w-full rounded-full transition duration-200 ease-in-out hover:bg-slate-700 active:bg-slate-900 focus:outline-none">
-            Group Horizontally
-          </button>
+          <AlignElementButton
+            buttonName="All Vertically"
+            onClick={() => handleAlignmentAll("vertical")}
+          />
+          <AlignElementButton
+            buttonName="All Horizontally"
+            onClick={() => handleAlignmentAll("horizontal")}
+          />
+          <AlignElementButton
+            buttonName="Group Vertically"
+            onClick={() => handleAlignmentGroup("vertical")}
+          />
+          <AlignElementButton
+            buttonName="Group Horizontally"
+            onClick={() => handleAlignmentGroup("horizontal")}
+          />
         </div>
       </div>
 
@@ -47,19 +63,15 @@ const LayerPanel = ({
       <div className="px-2 py-5">
         <p className="text-white font-bold text-center mb-3">Layer</p>
         <ul>
-          {elements.map((el) => (
-            <li
+          {elements.map((el, index) => (
+            <LayerItem
               key={el.id}
-              onClick={(e) => selectElement(el.id, e.shiftKey)}
-              className={`p-1 text-center cursor-pointer
-                text-white w-full py-2 rounded-full transition duration-200 ease-in-out hover:bg-slate-700 active:bg-slate-900 focus:outline-none ${
-                  el.selected
-                    ? "text-black bg-gray-200"
-                    : "text-white bg-transparent"
-                }`}
-            >
-              {el.type}
-            </li>
+              index={index}
+              element={el}
+              selectedIds={selectedIds}
+              selectElement={selectElement}
+              moveElement={moveElement}
+            />
           ))}
         </ul>
       </div>

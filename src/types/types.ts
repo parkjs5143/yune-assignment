@@ -1,9 +1,10 @@
 export type ElementType = "p" | "div" | "span";
 
 export interface ElementParams {
-  id: string;
+  id: number;
   type: ElementType;
   size: number;
   color: string;
-  selected: boolean;
 }
+
+export type AlignDirectionType = "vertical" | "horizontal";
