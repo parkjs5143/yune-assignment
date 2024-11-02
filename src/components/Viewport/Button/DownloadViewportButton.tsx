@@ -18,7 +18,7 @@ const DownloadViewportButton = forwardRef<HTMLDivElement>((_, ref) => {
 
   return (
     <button
-      className="fixed bottom-4 right-4 cursor-pointer flex justify-between bg-gray-800 px-3 py-2 rounded-full text-white tracking-wider shadow-xl hover:bg-gray-900 hover:scale-105 duration-500 hover:ring-1 font-mono w-[150px]"
+      className="fixed bottom-4 right-4 cursor-pointer flex justify-between bg-gray-800 px-3 py-2 rounded-full text-white tracking-wider shadow-xl hover:bg-gray-900 hover:scale-100 duration-500 hover:ring-1 font-mono w-[140px]"
       onClick={downloadImage}
     >
       Download
