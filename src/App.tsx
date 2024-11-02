@@ -8,7 +8,6 @@ function App() {
     selectedIds,
     addElement,
     selectElement,
-    handleGrouping,
     handleAlignment,
     moveElement,
   } = useElements();
@@ -20,7 +19,6 @@ function App() {
         selectedIds={selectedIds}
         addElement={addElement}
         selectElement={selectElement}
-        handleGrouping={handleGrouping}
         handleAlignment={handleAlignment}
         moveElement={moveElement}
       />

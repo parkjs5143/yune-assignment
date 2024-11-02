@@ -5,6 +5,7 @@ export interface ElementParams {
   type: ElementType;
   size: number;
   color: string;
+  groupId?: number;
 }
 
 export type AlignDirectionType = "vertical" | "horizontal";
