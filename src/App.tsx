@@ -1,33 +1,14 @@
 import LayerPanel from "@/components/LayerPanel/LayerPanel";
 import Viewport from "@/components/Viewport/Viewport";
-import useElements from "@/hooks/useElements";
+import useGroup from "@/hooks/useGroup";
 
 function App() {
-  const {
-    elements,
-    selectedIds,
-    addElement,
-    selectElement,
-    handleAlignment,
-    moveElement,
-  } = useElements();
+  useGroup(); // group, ungroup 이벤트
 
   return (
     <div className="min-w-full flex flex-row">
-      <LayerPanel
-        elements={elements}
-        selectedIds={selectedIds}
-        addElement={addElement}
-        selectElement={selectElement}
-        handleAlignment={handleAlignment}
-        moveElement={moveElement}
-      />
-      <Viewport
-        elements={elements}
-        selectedIds={selectedIds}
-        selectElement={selectElement}
-        moveElement={moveElement}
-      />
+      <LayerPanel />
+      <Viewport />
     </div>
   );
 }
