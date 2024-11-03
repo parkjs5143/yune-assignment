@@ -1,14 +1,19 @@
 import { useDrag, useDrop } from "react-dnd";
 import { ElementType } from "@/types/types";
 
-const LayerItem = (props: {
+const LayerItem = ({
+  element,
+  index,
+  selectElement,
+  selectedIds,
+  moveElement,
+}: {
   element: ElementType;
   index: number;
   selectElement: (id: number, multiSelect: boolean) => void;
   selectedIds: number[];
   moveElement: (fromIndex: number, toIndex: number) => void;
 }) => {
-  const { element, index, selectElement, selectedIds, moveElement } = props;
   const [, ref] = useDrag({
     type: "LAYER",
     item: { index },

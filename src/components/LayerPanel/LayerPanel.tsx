@@ -1,29 +1,18 @@
-import { ElementParams, ElementType, AlignDirectionType } from "@/types/types";
 import AddElementButton from "./Button/AddElementButton";
 import AlignElementButton from "./Button/AlignElementButton";
 import LayerItem from "./LayerItem/LayerItem";
+import { useElementStore } from "@/stores/elementStore";
 
-type LayerPanelProps = {
-  elements: ElementParams[];
-  selectedIds: number[];
-  addElement: (type: ElementType) => void;
-  selectElement: (id: number, isSelected: boolean) => void;
-  handleGrouping: (group: boolean) => void;
-  handleAlignmentAll: (type: AlignDirectionType) => void;
-  handleAlignmentGroup: (type: AlignDirectionType) => void;
-  moveElement: (fromIndex: number, toIndex: number) => void;
-};
+const LayerPanel = () => {
+  const {
+    elements,
+    selectedIds,
+    addElement,
+    handleAlignElements,
+    selectElement,
+    moveElement,
+  } = useElementStore();
 
-const LayerPanel = ({
-  elements,
-  selectedIds,
-  addElement,
-  selectElement,
-  handleGrouping,
-  handleAlignmentAll,
-  handleAlignmentGroup,
-  moveElement,
-}: LayerPanelProps) => {
   return (
     <section className="bg-gray-800">
       {/* Add Buttons */}
@@ -42,19 +31,19 @@ const LayerPanel = ({
         <div className="flex flex-col items-center">
           <AlignElementButton
             buttonName="All Vertically"
-            onClick={() => handleAlignmentAll("vertical")}
+            onClick={() => handleAlignElements("vertical")}
           />
           <AlignElementButton
             buttonName="All Horizontally"
-            onClick={() => handleAlignmentAll("horizontal")}
+            onClick={() => handleAlignElements("horizontal")}
           />
           <AlignElementButton
             buttonName="Group Vertically"
-            onClick={() => handleAlignmentGroup("vertical")}
+            onClick={() => handleAlignElements("verticalGroup")}
           />
           <AlignElementButton
             buttonName="Group Horizontally"
-            onClick={() => handleAlignmentGroup("horizontal")}
+            onClick={() => handleAlignElements("horizontalGroup")}
           />
         </div>
       </div>
