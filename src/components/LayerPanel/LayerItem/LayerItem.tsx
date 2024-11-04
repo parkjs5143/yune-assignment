@@ -1,5 +1,5 @@
 import { useDrag, useDrop } from "react-dnd";
-import { ElementType } from "@/types/types";
+import { ElementParams } from "@/types/types";
 
 const LayerItem = ({
   element,
@@ -8,7 +8,7 @@ const LayerItem = ({
   selectedIds,
   moveElement,
 }: {
-  element: ElementType;
+  element: ElementParams;
   index: number;
   selectElement: (id: number, multiSelect: boolean) => void;
   selectedIds: number[];

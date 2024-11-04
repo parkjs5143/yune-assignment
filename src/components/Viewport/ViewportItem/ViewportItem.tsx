@@ -6,7 +6,7 @@ type ViewportItemProps = {
   index: number;
   element: ElementParams;
   selectedIds: number[];
-  alignButtonType: alignType;
+  alignButtonType?: alignType;
   selectElement: (id: number, isSelected: boolean) => void;
   moveElement: (fromIndex: number, toIndex: number) => void;
 };
