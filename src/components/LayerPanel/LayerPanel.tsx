@@ -7,6 +7,8 @@ const LayerPanel = () => {
   const {
     elements,
     selectedIds,
+    alignButtonType,
+    
     addElement,
     handleAlignElements,
     selectElement,
@@ -31,18 +33,22 @@ const LayerPanel = () => {
         <div className="flex flex-col items-center">
           <AlignElementButton
             buttonName="All Vertically"
+            isSelected={alignButtonType === "vertical"}
             onClick={() => handleAlignElements("vertical")}
           />
           <AlignElementButton
             buttonName="All Horizontally"
+            isSelected={alignButtonType === "horizontal"}
             onClick={() => handleAlignElements("horizontal")}
           />
           <AlignElementButton
             buttonName="Group Vertically"
+            isSelected={alignButtonType === "verticalGroup"}
             onClick={() => handleAlignElements("verticalGroup")}
           />
           <AlignElementButton
             buttonName="Group Horizontally"
+            isSelected={alignButtonType === "horizontalGroup"}
             onClick={() => handleAlignElements("horizontalGroup")}
           />
         </div>

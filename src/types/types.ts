@@ -1,5 +1,11 @@
 export type ElementType = "p" | "div" | "span";
 
+export type alignType =
+  | "vertical"
+  | "horizontal"
+  | "verticalGroup"
+  | "horizontalGroup";
+
 export interface ElementParams {
   id: number;
   type: ElementType;
@@ -7,5 +13,3 @@ export interface ElementParams {
   color: string;
   groupId?: number;
 }
-
-export type AlignDirectionType = "vertical" | "horizontal";
