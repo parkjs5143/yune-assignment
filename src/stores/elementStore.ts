@@ -5,7 +5,7 @@ interface ElementsState {
   elements: ElementParams[];
   selectedIds: number[];
   groupIdCounter: number;
-  alignButtonType: alignType;
+  alignButtonType?: alignType;
   addElement: (type: ElementType) => void;
   selectElement: (id: number, multiSelect: boolean) => void;
   moveElement: (fromIndex: number, toIndex: number) => void;
@@ -35,14 +35,36 @@ export const useElementStore = create<ElementsState>((set) => ({
     })),
   selectElement: (id, multiSelect) =>
     set((state) => {
-      if (multiSelect) {
-        return {
-          selectedIds: state.selectedIds.includes(id)
-            ? state.selectedIds.filter((sid) => sid !== id)
-            : [...state.selectedIds, id],
-        };
+      const element = state.elements.find((el) => el.id === id);
+      const isSelected = state.selectedIds.includes(id);
+      const groupId = element?.groupId;
+
+      if (groupId) {
+        // 그룹 요소인 경우, 선택 로직
+        const groupElementIds = state.elements
+          .filter((el) => el.groupId === groupId)
+          .map((el) => el.id);
+
+        const updatedSelectedIds = multiSelect
+          ? isSelected
+            ? state.selectedIds.filter((sid) => !groupElementIds.includes(sid))
+            : state.selectedIds.concat(groupElementIds)
+          : isSelected
+          ? []
+          : groupElementIds;
+
+        return { selectedIds: updatedSelectedIds };
       } else {
-        return { selectedIds: state.selectedIds.includes(id) ? [] : [id] };
+        // 그룹 요소가 아닌 경우, 일반 선택 로직
+        const updatedSelectedIds = multiSelect
+          ? isSelected
+            ? state.selectedIds.filter((sid) => sid !== id)
+            : [...state.selectedIds, id]
+          : isSelected
+          ? []
+          : [id];
+
+        return { selectedIds: updatedSelectedIds };
       }
     }),
   moveElement: (fromIndex, toIndex) =>
@@ -78,7 +100,11 @@ export const useElementStore = create<ElementsState>((set) => ({
           if (b.groupId === undefined) return 1;
           return a.groupId - b.groupId;
         });
-        return { alignButtonType: type, elements: sortedElements, selectedIds: [] };
+        return {
+          alignButtonType: type,
+          elements: sortedElements,
+          selectedIds: [],
+        };
       } else {
         // group 정렬이 아닐 경우
         return { alignButtonType: type, selectedIds: [] };
